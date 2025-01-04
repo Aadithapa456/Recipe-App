@@ -78,7 +78,7 @@ const App = () => {
           <div className="sidebar mr-16">
             <SideBar onSelect={setCurrentView} />
           </div>
-          <div className="main-content mt-10 flex flex-1 flex-col gap-8">
+          <div className="main-content mt-10 flex flex-1 flex-col gap-8 mr-6">
             {recipeVisible ? (
               <RecipeDetail data={recipeInformation} close={closeRecipeDetail}></RecipeDetail>
             ) : (
