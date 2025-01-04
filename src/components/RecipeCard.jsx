@@ -1,9 +1,15 @@
 import { Clock, Heart, User } from "lucide-react";
 import React from "react";
 const labels = ["Italian", "30 min"];
-const RecipeCard = ({ data }) => {
+const RecipeCard = ({ data, onclick }) => {
+  // const hello = (e)=>{
+  //   onclick(data)
+  // }
   return (
-    <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
+    <div
+      className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md"
+      onClick={()=>onclick(data)}
+    >
       <div className="recipe-card-image">
         <img src={`${data.image}`} alt="" />
       </div>
