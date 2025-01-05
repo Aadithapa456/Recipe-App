@@ -15,6 +15,9 @@ body {
 }
 .grid-auto-fill {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 10px 20px;
+}
+.shadow-image{
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
