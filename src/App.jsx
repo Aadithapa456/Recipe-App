@@ -3,7 +3,7 @@ import SideBar from "./components/SideBar";
 import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
-import { fetchApiData, fetchRecipeInformation } from "./utils/api";
+import { fetchApiData, fetchRecipeInformation } from "./services/api";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
