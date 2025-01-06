@@ -1,23 +1,13 @@
 import React from "react";
 import Separator from "./Separator";
 import { ArrowLeft, Clock, User } from "lucide-react";
-const capitalizeFirstLetter = (val) => {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-};
-const formatMinutes = (minutes) => {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  if (hours > 0 && remainingMinutes > 0) {
-    return hours, remainingMinutes;
-  } else if (hours > 0) {
-    return `${hours}`;
-  } else {
-    return `${remainingMinutes}`;
-  }
-};
+import Header from "./Header";
+import { capitalizeFirstLetter, formatMinutes } from "../utils/utils";
+
 const RecipeDetail = ({ data, close }) => {
   return (
     <>
+      <Header />
       {data ? (
         <div className="recipe-info-container mx-auto mb-10 flex w-full max-w-[1400px] flex-col gap-10 px-10">
           <button

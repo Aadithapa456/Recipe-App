@@ -17,7 +17,10 @@ const Header = () => {
           <span>Add Recipe</span>
         </button>
         <div className="profile">
-          <div className="h-10 w-10 rounded-full bg-gray"></div>
+          <img
+            src="https://i.pinimg.com/550x/ac/82/57/ac8257e1cfc4e63f5c63f3d4869eb7c4.jpg"
+            className="h-12 w-12 rounded-full"
+          ></img>
         </div>
       </div>
     </div>

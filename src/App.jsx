@@ -7,7 +7,7 @@ import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 
 const App = () => {
-  const BASE_URL = "https://api.spoonacular.com/recipes/complexSearch";
+  const BASE_URL = "https://api.spoonacular.com/recipes/random";
   const API_KEY = import.meta.env.VITE_API_KEY;
   const [currentView, setCurrentView] = useState("Home");
   const [recipeId, setRecipeId] = useState("");
@@ -19,10 +19,10 @@ const App = () => {
       const response = await axios.get(BASE_URL, {
         params: {
           apiKey: API_KEY,
+          number: 10,
         },
       });
-      setRecipe(response.data.results);
-      // console.log(recipe);
+      setRecipe(response.data.recipes);
     } catch (error) {
       console.log(error.message);
     }
@@ -38,7 +38,6 @@ const App = () => {
         },
       );
       setRecipeInformation(response.data);
-      console.log(recipeInformation);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,8 +51,6 @@ const App = () => {
     }
   }, [recipeId]);
   const hello = (data) => {
-    // fetchRecipeInformation(data.id)
-    // alert(data.id);
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
     console.log(data.id);
@@ -78,9 +75,12 @@ const App = () => {
           <div className="sidebar mr-16">
             <SideBar onSelect={setCurrentView} />
           </div>
-          <div className="main-content mt-10 flex flex-1 flex-col gap-8 mr-6">
+          <div className="main-content mr-6 mt-10 flex flex-1 flex-col gap-8">
             {recipeVisible ? (
-              <RecipeDetail data={recipeInformation} close={closeRecipeDetail}></RecipeDetail>
+              <RecipeDetail
+                data={recipeInformation}
+                close={closeRecipeDetail}
+              ></RecipeDetail>
             ) : (
               renderContent()
             )}
