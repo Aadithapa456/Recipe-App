@@ -2,7 +2,7 @@ import React from "react";
 import Separator from "./Separator";
 import { ArrowLeft, Clock, User } from "lucide-react";
 import Header from "./Header";
-import { capitalizeFirstLetter, formatMinutes } from "../utils/utils";
+import { capitalizeFirstLetter, formatMinutes } from "../utils/helpers";
 
 const RecipeDetail = ({ data, close }) => {
   return (

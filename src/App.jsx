@@ -1,64 +1,43 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "./components/SideBar";
-import Header from "./components/Header";
-import axios from "axios";
 import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
+import { fetchApiData, fetchRecipeInformation } from "./utils/api";
 
 const App = () => {
-  const BASE_URL = "https://api.spoonacular.com/recipes/random";
-  const API_KEY = import.meta.env.VITE_API_KEY;
   const [currentView, setCurrentView] = useState("Home");
   const [recipeId, setRecipeId] = useState("");
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);
   const [recipeVisible, setRecipeVisible] = useState(false);
-  const fetchApiData = async () => {
-    try {
-      const response = await axios.get(BASE_URL, {
-        params: {
-          apiKey: API_KEY,
-          number: 10,
-        },
-      });
-      setRecipe(response.data.recipes);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  const fetchRecipeInformation = async (id) => {
-    try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information`,
-        {
-          params: {
-            apiKey: API_KEY,
-          },
-        },
-      );
-      setRecipeInformation(response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
   useEffect(() => {
-    fetchApiData();
+    const fetchData = async () => {
+      const data = await fetchApiData();
+      setRecipe(data);
+    };
+    fetchData();
   }, []);
+
   useEffect(() => {
-    if (recipeId) {
-      fetchRecipeInformation(recipeId);
-    }
+    const fetchRecipeInfo = async () => {
+      if (recipeId) {
+        const info = await fetchRecipeInformation(recipeId);
+        setRecipeInformation(info);
+      }
+    };
+    fetchRecipeInfo();
   }, [recipeId]);
-  const hello = (data) => {
+
+  const handleRecipeClick = (data) => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
-    console.log(data.id);
   };
   const renderContent = () => {
     switch (currentView) {
       case "Home":
-        return <Home recipe={recipe} onclick={hello} />;
+        return <Home recipe={recipe} onclick={handleRecipeClick} />;
       case "Favourites":
         return <Favourites />;
       default:

@@ -1,6 +1,6 @@
 import { Clock, Heart, User } from "lucide-react";
 import React from "react";
-import { formatMinutes } from "../utils/utils";
+import { formatMinutes } from "../utils/helpers";
 const RecipeCard = ({ data, onclick }) => {
   return (
     <div
