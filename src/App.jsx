@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
+import { storeFavourite } from "./services/localhost";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -11,7 +12,7 @@ const App = () => {
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);
   const [recipeVisible, setRecipeVisible] = useState(false);
-
+  const [favourite, setFavourite] = useState();
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData();
@@ -34,10 +35,21 @@ const App = () => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
   };
+  const handleFavouriteClick = (id) => {
+    // setFavourite(data.id);
+    console.log(id);
+    storeFavourite(id);
+  };
   const renderContent = () => {
     switch (currentView) {
       case "Home":
-        return <Home recipe={recipe} onclick={handleRecipeClick} />;
+        return (
+          <Home
+            recipe={recipe}
+            handleRecipeClick={handleRecipeClick}
+            handleFavouriteClick={handleFavouriteClick}
+          />
+        );
       case "Favourites":
         return <Favourites />;
       default:

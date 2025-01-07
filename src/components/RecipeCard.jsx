@@ -1,12 +1,11 @@
 import { Clock, Heart, User } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { formatMinutes } from "../utils/helpers";
-const RecipeCard = ({ data, onclick }) => {
+
+const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
+  const [favourite, setFavourite] = useState(false);
   return (
-    <div
-      className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md"
-      onClick={() => onclick(data)}
-    >
+    <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
       <div className="recipe-card-image">
         <img src={`${data.image}`} alt="" className="" />
       </div>
@@ -33,7 +32,10 @@ const RecipeCard = ({ data, onclick }) => {
       </div>
       <div className="recipe-footer mb-4 mt-auto flex items-center justify-between px-4">
         <div className="recipe-footer-left flex items-center gap-2">
-          <div className="recipe-time flex items-center gap-2 text-xs text-gray">
+          <div
+            className="recipe-time flex items-center gap-2 text-xs text-gray"
+            onClick={() => handleRecipeClick(data)}
+          >
             <Clock />
             <span>{formatMinutes(data.readyInMinutes)} Mins</span>
           </div>
@@ -43,8 +45,14 @@ const RecipeCard = ({ data, onclick }) => {
           </div>
         </div>
         <div className="recipe-footer-right">
-          <button className="recipe-favourite text-gray hover:text-primary">
-            <Heart />
+          <button
+            className="recipe-favourite text-gray hover:text-primary"
+            onClick={() => {
+              handleFavouriteClick(data.id);
+              setFavourite(true);
+            }}
+          >
+            <Heart className={`${favourite ? "fill-primary " : "text-red"}`} />
           </button>
         </div>
       </div>
