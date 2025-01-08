@@ -2,8 +2,11 @@ import React from "react";
 import Separator from "./Separator";
 import { ArrowLeft, Clock, User } from "lucide-react";
 import Header from "./Header";
-import { capitalizeFirstLetter, formatMinutes } from "../utils/helpers";
+import { formatMinutes } from "../utils/helpers";
 import Label from "./Label";
+import Instructions from "./Instructions";
+import Ingredients from "./Ingredients";
+
 const RecipeDetail = ({ data, close }) => {
   return (
     <>
@@ -22,7 +25,6 @@ const RecipeDetail = ({ data, close }) => {
             </div>
             <div className="recipe-meta flex items-center gap-6 text-sm text-gray">
               <div className="recipe-time flex items-center gap-2">
-                {/* <Clock /> <span>{data.cookingMinutes || "15"} Mins</span> */}
                 <Clock /> <span>{formatMinutes(data.readyInMinutes)} Mins</span>
               </div>
               <div className="recipe-servings flex items-center gap-1">
@@ -39,55 +41,11 @@ const RecipeDetail = ({ data, close }) => {
                 className="shadow-image h-[450px] w-full rounded-md object-cover"
               />
             </div>
-            <div className="recipe-info-ingredients min-h-60 w-2/5 rounded-lg bg-white px-10 py-4 shadow-md">
-              <div className="recipe-info-ingredients-title py-3 text-xl font-bold text-primary">
-                Ingredients
-              </div>
-              <Separator />
-              <div className="recipe-ingredient-items mb-4 mt-10 flex flex-col gap-3">
-                {data.extendedIngredients
-                  .slice(1, 7)
-                  .map((ingredient, index) => (
-                    // <>
-                    <div
-                      className="recipe-ingredient-item shadow-xs flex items-center justify-between rounded-lg bg-gray-light px-3 py-2"
-                      key={index}
-                    >
-                      <div className="item-name text-base">
-                        {capitalizeFirstLetter(ingredient.name)}
-                      </div>
-                      <div className="item-quantity text-xs text-gray">
-                        {ingredient.amount}
-                        <span> {ingredient.unit}</span>
-                      </div>
-                    </div>
-                    // </>
-                  ))}
-              </div>
-            </div>
+            <Ingredients ingredients={data.extendedIngredients.slice(1, 7)} />
           </div>
           <div className="recipe-info-bottom flex flex-col rounded-lg shadow-md">
-            <div className="recipe-info-instructions-wrapper flex h-fit w-full flex-col bg-white px-8 py-6 shadow-md">
-              <div className="recipe-info-instructions-title py-2 text-2xl font-bold text-primary">
-                Instructions
-              </div>
-              <Separator />
-              <div className="recipe-instructions">
-                {data.analyzedInstructions[0].steps.map((item, index) => (
-                  <>
-                    <div className="mt-8 flex items-center gap-6" key={index}>
-                      <div className="instruction-number flex h-6 w-6 items-center justify-center rounded-full bg-primary p-4 text-gray-light">
-                        {index + 1}
-                      </div>
-                      <div className="instruction">{item.step}</div>
-                    </div>
-                  </>
-                ))}
-              </div>
-            </div>
-
+            <Instructions instructions={data.analyzedInstructions[0].steps} />
             <Separator />
-            {/* <Label label={"hello"} /> */}
             <div className="labels grid-auto-fill-detail bg-white px-6 py-4">
               {data.dishTypes.map((label, index) => (
                 <Label label={label} key={index} />
