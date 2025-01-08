@@ -13,9 +13,14 @@ body {
 body {
   font-family: "Poppins", sans-serif;
 }
-.grid-auto-fill {
+.grid-auto-fill-card {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+  gap: 10px 20px;
+}
+.grid-auto-fill-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 10px 20px;
 }
 .shadow-image {

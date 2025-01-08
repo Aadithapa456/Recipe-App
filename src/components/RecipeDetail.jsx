@@ -3,7 +3,7 @@ import Separator from "./Separator";
 import { ArrowLeft, Clock, User } from "lucide-react";
 import Header from "./Header";
 import { capitalizeFirstLetter, formatMinutes } from "../utils/helpers";
-
+import Label from "./Label";
 const RecipeDetail = ({ data, close }) => {
   return (
     <>
@@ -66,8 +66,8 @@ const RecipeDetail = ({ data, close }) => {
               </div>
             </div>
           </div>
-          <div className="recipe-info-bottom flex shadow-md">
-            <div className="recipe-info-instructions-wrapper flex h-fit flex-col rounded-lg bg-white px-8 py-6 shadow-md">
+          <div className="recipe-info-bottom flex flex-col rounded-lg shadow-md">
+            <div className="recipe-info-instructions-wrapper flex h-fit w-full flex-col bg-white px-8 py-6 shadow-md">
               <div className="recipe-info-instructions-title py-2 text-2xl font-bold text-primary">
                 Instructions
               </div>
@@ -84,6 +84,14 @@ const RecipeDetail = ({ data, close }) => {
                   </>
                 ))}
               </div>
+            </div>
+
+            <Separator />
+            {/* <Label label={"hello"} /> */}
+            <div className="labels grid-auto-fill-detail bg-white px-6 py-4">
+              {data.dishTypes.map((label, index) => (
+                <Label label={label} key={index} />
+              ))}
             </div>
           </div>
         </div>

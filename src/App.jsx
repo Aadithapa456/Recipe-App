@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
-import { storeFavourite } from "./services/localhost";
+import { storeFavourite } from "./services/favourites";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -35,10 +35,10 @@ const App = () => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
   };
-  const handleFavouriteClick = (id) => {
+  const handleFavouriteClick = (id, state) => {
     // setFavourite(data.id);
     console.log(id);
-    storeFavourite(id);
+    storeFavourite(id, state);
   };
   const renderContent = () => {
     switch (currentView) {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
-import { getFavouriteItem } from "../services/localhost";
+import { getFavouriteItem } from "../services/favourites";
 
-const Favourites = ({ favourite }) => {
+const Favourites = () => {
   const [favouriteItem, setFavouriteItem] = useState();
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +20,7 @@ const Favourites = ({ favourite }) => {
               data={item}
               handleRecipeClick={() => console.log("object")}
               handleFavouriteClick={() => console.log("object")}
+              key={index}
             />
           ))
         : "Not found"}

@@ -1,23 +1,37 @@
 import { Clock, Heart, User } from "lucide-react";
 import React, { useState } from "react";
 import { formatMinutes } from "../utils/helpers";
+import { useEffect } from "react";
+import Label from "./Label";
 
 const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
   const [favourite, setFavourite] = useState(false);
+  const toggleFavourite = () => {
+    setFavourite((prevFavourite) => {
+      const newFavourite = !prevFavourite;
+      handleFavouriteClick(data.id, newFavourite);
+      return newFavourite;
+    });
+  };
+  let favs;
+  useEffect(() => {
+    favs = JSON.parse(localStorage.getItem("favourites")) || [];
+    // if(data.id == )
+    favs.forEach((item) => {
+      if (data.id == item.id) {
+        setFavourite(true);
+      }
+    });
+  }, [data.id]);
   return (
     <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
       <div className="recipe-card-image">
         <img src={`${data.image}`} alt="" className="" />
       </div>
       <div className="recipe-card-main flex flex-col gap-3 px-4">
-        <div className="recipe-label grid-auto-fill">
+        <div className="recipe-label grid-auto-fill-card">
           {data.dishTypes.map((label, index) => (
-            <div
-              className="shadow-xs flex items-center justify-center rounded-lg bg-gray-light px-3 py-1.5 text-xs"
-              key={index}
-            >
-              {label}
-            </div>
+            <Label label={label} key={index} />
           ))}
         </div>
         <div className="recipe-main-details">
@@ -47,12 +61,9 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
         <div className="recipe-footer-right">
           <button
             className="recipe-favourite text-gray hover:text-primary"
-            onClick={() => {
-              handleFavouriteClick(data.id);
-              setFavourite(true);
-            }}
+            onClick={toggleFavourite}
           >
-            <Heart className={`${favourite ? "fill-primary " : "text-red"}`} />
+            <Heart className={`${favourite ? "fill-primary" : "text-red"}`} />
           </button>
         </div>
       </div>
