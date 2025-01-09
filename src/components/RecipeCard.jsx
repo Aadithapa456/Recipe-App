@@ -13,19 +13,24 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
       return newFavourite;
     });
   };
-  let favs;
+
   useEffect(() => {
-    favs = JSON.parse(localStorage.getItem("favourites")) || [];
+    let favs = JSON.parse(localStorage.getItem("favourites")) || [];
     favs.forEach((item) => {
       if (data.id == item.id) {
         setFavourite(true);
       }
     });
   }, [data.id]);
+
   return (
     <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
       <div className="recipe-card-image">
-        <img src={`${data.image}`} alt="" className="" />
+        <img
+          src={`${data.image ? data.image : "https://placehold.co/600x400"}`}
+          alt=""
+          className=""
+        />
       </div>
       <div className="recipe-card-main flex flex-col gap-3 px-4">
         <div className="recipe-label grid-auto-fill-card">
@@ -62,7 +67,10 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
             className="recipe-favourite text-gray hover:text-primary"
             onClick={toggleFavourite}
           >
-            <Heart className={`${favourite ? "fill-primary" : "text-red"}`} />
+            <Heart
+              className={`${favourite ? "fill-primary" : "text-red"}`}
+              stroke={`${favourite ? "none" : "gray"}`}
+            />
           </button>
         </div>
       </div>

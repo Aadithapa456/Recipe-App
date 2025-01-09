@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
+import Toast from "./Toast";
 
 const Home = ({
   recipe,
@@ -9,6 +10,8 @@ const Home = ({
   searchQuery,
 }) => {
   const [searchedItems, setSearchedItems] = useState(recipe);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   useEffect(() => {
     const searchRecipes = () => {
       if (searchQuery) {
@@ -22,6 +25,22 @@ const Home = ({
     };
     searchRecipes();
   }, [searchQuery, recipe]);
+
+  const toggleFavourite = (id, newFavourite) => {
+    handleFavouriteClick(id, newFavourite);
+    setToastMessage(
+      newFavourite ? "Added to Favourites" : "Removed from Favourites",
+    );
+    setShowToast(true);
+  };
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 2900);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
   return (
     <div>
       <CategoryFilter />
@@ -32,11 +51,12 @@ const Home = ({
                 data={item}
                 key={item.id}
                 handleRecipeClick={handleRecipeClick}
-                handleFavouriteClick={handleFavouriteClick}
+                handleFavouriteClick={toggleFavourite}
               />
             ))
           : "No recipes found"}
       </div>
+      {showToast && <Toast message={toastMessage} />}
     </div>
   );
 };

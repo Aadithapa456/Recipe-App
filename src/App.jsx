@@ -6,6 +6,7 @@ import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import { storeFavourite } from "./services/favourites";
 import Header from "./components/Header";
+import { Toastify } from "toastify";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -31,7 +32,7 @@ const App = () => {
     };
     fetchRecipeInfo();
   }, [recipeId]);
-
+  
   const handleRecipeClick = (data) => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
@@ -75,7 +76,7 @@ const App = () => {
           <div className="sidebar mr-16">
             <SideBar onSelect={setCurrentView} />
           </div>
-          <div className="main-content mr-6 mt-10 flex flex-1 flex-col gap-8">
+          <div className="main-content relative mr-6 mt-10 flex flex-1 flex-col gap-8">
             <Header handleForm={handleForm} />
             {recipeVisible ? (
               <RecipeDetail

@@ -1,7 +1,6 @@
 import React from "react";
 import Separator from "./Separator";
 import { ArrowLeft, Clock, User } from "lucide-react";
-import Header from "./Header";
 import { formatMinutes } from "../utils/helpers";
 import Label from "./Label";
 import Instructions from "./Instructions";
@@ -10,7 +9,6 @@ import Ingredients from "./Ingredients";
 const RecipeDetail = ({ data, close }) => {
   return (
     <>
-      <Header />
       {data ? (
         <div className="recipe-info-container mx-auto mb-10 flex w-full max-w-[1400px] flex-col gap-10 px-10">
           <button
