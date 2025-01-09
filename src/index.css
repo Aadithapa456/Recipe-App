@@ -15,7 +15,7 @@ body {
 }
 .grid-auto-fill-card {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 10px 20px;
 }
 .grid-auto-fill-detail {

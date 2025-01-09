@@ -5,6 +5,7 @@ import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import { storeFavourite } from "./services/favourites";
+import Header from "./components/Header";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -12,7 +13,7 @@ const App = () => {
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);
   const [recipeVisible, setRecipeVisible] = useState(false);
-  const [favourite, setFavourite] = useState();
+  const [searchRecipe, setSearchRecipe] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData();
@@ -36,9 +37,12 @@ const App = () => {
     setRecipeVisible((prev) => !prev);
   };
   const handleFavouriteClick = (id, state) => {
-    // setFavourite(data.id);
     console.log(id);
     storeFavourite(id, state);
+  };
+  const formData = (recipeName) => {
+    // console.log(h);
+    setSearchRecipe(recipeName);
   };
   const renderContent = () => {
     switch (currentView) {
@@ -48,6 +52,8 @@ const App = () => {
             recipe={recipe}
             handleRecipeClick={handleRecipeClick}
             handleFavouriteClick={handleFavouriteClick}
+            handleForm={formData}
+            searchQuery={searchRecipe}
           />
         );
       case "Favourites":
@@ -59,6 +65,9 @@ const App = () => {
   const closeRecipeDetail = () => {
     setRecipeVisible(false);
   };
+  const handleForm = (recipeName) => {
+    setSearchRecipe(recipeName);
+  };
   return (
     <>
       <div className="app-container flex min-h-screen">
@@ -67,6 +76,7 @@ const App = () => {
             <SideBar onSelect={setCurrentView} />
           </div>
           <div className="main-content mr-6 mt-10 flex flex-1 flex-col gap-8">
+            <Header handleForm={handleForm} />
             {recipeVisible ? (
               <RecipeDetail
                 data={recipeInformation}
@@ -75,8 +85,6 @@ const App = () => {
             ) : (
               renderContent()
             )}
-            {/* {} */}
-            {/* <RecipeDetail /> */}
           </div>
         </div>
       </div>

@@ -1,17 +1,33 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
-import Header from "./Header";
 
-const Home = ({ recipe, handleRecipeClick, handleFavouriteClick }) => {
+const Home = ({
+  recipe,
+  handleRecipeClick,
+  handleFavouriteClick,
+  searchQuery,
+}) => {
+  const [searchedItems, setSearchedItems] = useState(recipe);
+  useEffect(() => {
+    const searchRecipes = () => {
+      if (searchQuery) {
+        const filteredItems = recipe.filter((item) =>
+          item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+        setSearchedItems(filteredItems);
+      } else {
+        setSearchedItems(recipe);
+      }
+    };
+    searchRecipes();
+  }, [searchQuery, recipe]);
   return (
     <div>
-      <Header />
       <CategoryFilter />
       <div className="recipe-section md:grid-cols2 mb-6 mt-10 grid grid-cols-1 gap-x-4 gap-y-12 lg:grid-cols-4">
-        {recipe.length > 0
-          ? recipe.map((item) => (
+        {searchedItems.length > 0
+          ? searchedItems.map((item) => (
               <RecipeCard
                 data={item}
                 key={item.id}
@@ -19,7 +35,7 @@ const Home = ({ recipe, handleRecipeClick, handleFavouriteClick }) => {
                 handleFavouriteClick={handleFavouriteClick}
               />
             ))
-          : "Loading"}
+          : "No recipes found"}
       </div>
     </div>
   );

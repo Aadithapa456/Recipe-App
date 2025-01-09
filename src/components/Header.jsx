@@ -1,14 +1,29 @@
 import { Plus, Search } from "lucide-react";
 import React from "react";
-const Header = () => {
+import { useState } from "react";
+const Header = ({ handleForm }) => {
+  const [formData, setFormData] = useState("");
+  const handleInput = (e) => {
+    setFormData(e.target.value);
+    handleForm(e.target.value);
+    // console.log(formData);
+  };
+  const handleSearch = () => {
+    console.log(formData);
+  };
   return (
     <div className="header-container mb-6 flex justify-between">
       <div className="header-left relative flex">
-        <Search className="absolute left-2 top-[50%] translate-y-[-50%]" />
+        <Search
+          className="absolute left-2 top-[50%] translate-y-[-50%]"
+          onClick={handleSearch}
+        />
         <input
           type="text"
           className="w-96 border border-border-light bg-white py-2 pl-10 text-sm"
           placeholder="Search for recipes.."
+          onChange={handleInput}
+          value={formData}
         />
       </div>
       <div className="header-right mr-4 flex items-center gap-8">

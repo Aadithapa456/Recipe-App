@@ -16,7 +16,6 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
   let favs;
   useEffect(() => {
     favs = JSON.parse(localStorage.getItem("favourites")) || [];
-    // if(data.id == )
     favs.forEach((item) => {
       if (data.id == item.id) {
         setFavourite(true);
@@ -30,7 +29,7 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
       </div>
       <div className="recipe-card-main flex flex-col gap-3 px-4">
         <div className="recipe-label grid-auto-fill-card">
-          {data.dishTypes.map((label, index) => (
+          {data.dishTypes.slice(0, 3).map((label, index) => (
             <Label label={label} key={index} />
           ))}
         </div>

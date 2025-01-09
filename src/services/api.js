@@ -6,7 +6,7 @@ export const fetchApiData = async () => {
     const response = await axios.get(BASE_URL, {
       params: {
         apiKey: API_KEY,
-        number: 10,
+        number: 15,
       },
     });
     return response.data.recipes;
