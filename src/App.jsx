@@ -6,7 +6,6 @@ import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import { storeFavourite } from "./services/favourites";
 import Header from "./components/Header";
-import { Toastify } from "toastify";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -32,7 +31,7 @@ const App = () => {
     };
     fetchRecipeInfo();
   }, [recipeId]);
-  
+
   const handleRecipeClick = (data) => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);

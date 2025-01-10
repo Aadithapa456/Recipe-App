@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Home, Heart, Folder, Clock, Settings, Utensils } from "lucide-react";
 const sideBarContents = [
   { name: "Home", icon: <Home /> },
@@ -7,7 +7,8 @@ const sideBarContents = [
   { name: "Recents", icon: <Clock /> },
   { name: "Settings", icon: <Settings /> },
 ];
-const SideBar = ({onSelect}) => {
+const SideBar = ({ onSelect }) => {
+  const [activeItem, setActiveItem] = useState("Home");
   const handleSelect = (item) => {
     onSelect(item.name);
   };
@@ -22,8 +23,11 @@ const SideBar = ({onSelect}) => {
           {sideBarContents.map((item, index) => (
             <li
               key={index}
-              className="text-md mt-4 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:text-primary"
-              onClick={() => handleSelect(item)}
+              className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${activeItem == item ? "bg-primary text-white" : "text-gray-700"}`}
+              onClick={() => {
+                handleSelect(item);
+                setActiveItem(item);
+              }}
             >
               {item.icon}
               <span>{item.name}</span>
