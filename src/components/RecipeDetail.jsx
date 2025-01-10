@@ -10,14 +10,14 @@ const RecipeDetail = ({ data, close }) => {
   return (
     <>
       {data ? (
-        <div className="recipe-info-container mx-auto mb-10 flex w-full max-w-[1400px] flex-col gap-10 px-10">
+        <div className="recipe-info-container mx-auto mb-10 flex w-full max-w-[1400px] flex-col gap-10 px-2 lg:px-10">
           <button
             className="transition duration-300 hover:text-primary"
             onClick={close}
           >
             <ArrowLeft />
           </button>
-          <div className="recipe-meta-details mb-5 flex items-center justify-between">
+          <div className="recipe-meta-details mb-5 flex flex-wrap items-center justify-between">
             <div className="recipe-detail-title text-2xl font-bold text-primary">
               {data.title}
             </div>
@@ -31,7 +31,7 @@ const RecipeDetail = ({ data, close }) => {
               </div>
             </div>
           </div>
-          <div className="recipe-info-top flex justify-between gap-10">
+          <div className="recipe-info-top flex flex-col justify-between gap-10 lg:flex-row">
             <div className="image-container">
               <img
                 src={data.image}

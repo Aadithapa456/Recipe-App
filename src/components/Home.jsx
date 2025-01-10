@@ -62,7 +62,7 @@ const Home = ({
   return (
     <div>
       <CategoryFilter handleDishType={handleDishTypeChange} />
-      <div className="recipe-section md:grid-cols2 mb-6 mt-10 grid grid-cols-1 gap-x-4 gap-y-12 lg:grid-cols-4">
+      <div className="recipe-section md:grid-cols2 mb-6 mt-10 grid grid-cols-1 justify-items-center gap-x-4 gap-y-12 lg:grid-cols-4">
         {searchedItems.length > 0
           ? searchedItems.map((item) => (
               <RecipeCard

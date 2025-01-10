@@ -12,7 +12,7 @@ const Header = ({ handleForm }) => {
     console.log(formData);
   };
   return (
-    <div className="header-container mb-6 flex justify-between">
+    <div className="header-container mb-6 mt-3 flex flex-col-reverse justify-between gap-10 md:mt-2 md:gap-1 lg:mt-1 lg:flex-row">
       <div className="header-left relative flex">
         <Search
           className="absolute left-2 top-[50%] translate-y-[-50%]"
@@ -20,13 +20,13 @@ const Header = ({ handleForm }) => {
         />
         <input
           type="text"
-          className="w-96 border border-border-light bg-white py-2 pl-10 text-sm"
+          className="w-full border border-border-light bg-white py-2 pl-10 text-sm lg:w-96"
           placeholder="Search for recipes.."
           onChange={handleInput}
           value={formData}
         />
       </div>
-      <div className="header-right mr-4 flex items-center gap-8">
+      <div className="header-right mr-4 flex flex-row-reverse items-center justify-between gap-8 md:justify-center lg:flex-row">
         <button className="add-recipe flex items-center gap-4 rounded-md bg-primary px-4 py-2 text-sm text-white shadow-sm transition hover:bg-primary-dark">
           <Plus />
           <span>Add Recipe</span>

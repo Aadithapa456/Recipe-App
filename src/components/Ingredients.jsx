@@ -4,7 +4,7 @@ import Separator from "./Separator";
 
 const Ingredients = ({ ingredients }) => {
   return (
-    <div className="recipe-info-ingredients min-h-60 w-2/5 rounded-lg bg-white px-10 py-4 shadow-md">
+    <div className="recipe-info-ingredients min-h-60 w-full rounded-lg bg-white px-10 py-4 shadow-md lg:w-2/5">
       <div className="recipe-info-ingredients-title py-3 text-xl font-bold text-primary">
         Ingredients
       </div>

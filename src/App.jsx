@@ -72,10 +72,10 @@ const App = () => {
     <>
       <div className="app-container flex min-h-screen">
         <div className="flex flex-1">
-          <div className="sidebar mr-16">
+          <div className="sidebar mr-6 lg:mr-16">
             <SideBar onSelect={setCurrentView} />
           </div>
-          <div className="main-content relative mr-6 mt-10 flex flex-1 flex-col gap-8">
+          <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
             <Header handleForm={handleForm} />
             {recipeVisible ? (
               <RecipeDetail

@@ -1,4 +1,4 @@
-import { Clock, Heart, User } from "lucide-react";
+import { ArrowUpRight, Clock, Heart, User } from "lucide-react";
 import React, { useState } from "react";
 import { formatMinutes } from "../utils/helpers";
 import { useEffect } from "react";
@@ -25,12 +25,18 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
 
   return (
     <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
-      <div className="recipe-card-image">
+      <div className="recipe-card-image relative">
         <img
           src={`${data.image ? data.image : "https://placehold.co/600x400"}`}
           alt=""
           className=""
         />
+        <button
+          className="details-btn p-.5 text- absolute right-4 top-2 rounded-full bg-white text-gray shadow-md"
+          onClick={() => handleRecipeClick(data)}
+        >
+          <ArrowUpRight />
+        </button>
       </div>
       <div className="recipe-card-main flex flex-col gap-3 px-4">
         <div className="recipe-label grid-auto-fill-card">
@@ -50,10 +56,7 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
       </div>
       <div className="recipe-footer mb-4 mt-auto flex items-center justify-between px-4">
         <div className="recipe-footer-left flex items-center gap-2">
-          <div
-            className="recipe-time flex items-center gap-2 text-xs text-gray"
-            onClick={() => handleRecipeClick(data)}
-          >
+          <div className="recipe-time flex items-center gap-2 text-xs text-gray">
             <Clock />
             <span>{formatMinutes(data.readyInMinutes)} Mins</span>
           </div>
@@ -68,7 +71,7 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
             onClick={toggleFavourite}
           >
             <Heart
-              className={`${favourite ? "fill-primary" : "text-red"}`}
+              className={`hover:stroke-primary ${favourite ? "fill-primary" : "text-red"}`}
               stroke={`${favourite ? "none" : "gray"}`}
             />
           </button>
