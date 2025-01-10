@@ -42,11 +42,11 @@ const SideBar = ({ onSelect }) => {
           isMobile ? "translate-x-0" : "-translate-x-full"
         } lg:block lg:translate-x-0`}
       >
-        <div className="sidebar-logo flex items-center gap-4 p-4 text-center text-3xl font-bold text-primary">
+        <div className="sidebar-logo flex items-center gap-4 p-4 text-center text-3xl font-bold text-primary mt-4">
+          <span>ReciPie</span>
           <Utensils />
-          <span>Cookify</span>
         </div>
-        <div className="sidebar-main">
+        <div className="sidebar-main lg:mt-20">
           <ul>
             {sideBarContents.map((item, index) => (
               <li
