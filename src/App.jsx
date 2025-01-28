@@ -49,11 +49,26 @@ const App = () => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
   };
+
   const handleFavouriteClick = (state) => {
     setToastMessage(state ? "Added to Favourites" : "Removed from Favourites");
     setShowToast(true);
   };
+
   const formData = (recipeName) => {
+    setSearchRecipe(recipeName);
+  };
+
+  const handleCurrentView = (current) => {
+    setCurrentView(current);
+    setRecipeVisible(false);
+  };
+
+  const closeRecipeDetail = () => {
+    setRecipeVisible(false);
+  };
+
+  const handleForm = (recipeName) => {
     setSearchRecipe(recipeName);
   };
   const renderContent = () => {
@@ -79,18 +94,13 @@ const App = () => {
         return null;
     }
   };
-  const closeRecipeDetail = () => {
-    setRecipeVisible(false);
-  };
-  const handleForm = (recipeName) => {
-    setSearchRecipe(recipeName);
-  };
+
   return (
     <>
       <div className="app-container flex min-h-screen">
         <div className="flex flex-1">
           <div className="sidebar mr-6 lg:mr-16">
-            <SideBar onSelect={setCurrentView} />
+            <SideBar onSelect={handleCurrentView} />
           </div>
           <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
             <Header handleForm={handleForm} />
