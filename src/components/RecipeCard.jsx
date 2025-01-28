@@ -5,12 +5,13 @@ import { useEffect } from "react";
 import Label from "./Label";
 import { storeFavourite } from "../services/favourites";
 
-const RecipeCard = ({ data, handleRecipeClick }) => {
+const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
   const [favourite, setFavourite] = useState(false);
   const toggleFavourite = () => {
     setFavourite((prevFavourite) => {
       const newFavourite = !prevFavourite;
       storeFavourite(data.id, newFavourite);
+      handleFavouriteClick(newFavourite); // Sending the current state of selected recipe
       return newFavourite;
     });
   };

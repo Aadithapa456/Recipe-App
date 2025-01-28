@@ -6,6 +6,7 @@ import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import { storeFavourite } from "./services/favourites";
 import Header from "./components/Header";
+import Toast from "./components/Toast";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -14,6 +15,9 @@ const App = () => {
   const [recipe, setRecipe] = useState([]);
   const [recipeVisible, setRecipeVisible] = useState(false);
   const [searchRecipe, setSearchRecipe] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData();
@@ -32,13 +36,24 @@ const App = () => {
     fetchRecipeInfo();
   }, [recipeId]);
 
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 2900);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
   const handleRecipeClick = (data) => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
   };
-
+  const handleFavouriteClick = (state) => {
+    setToastMessage(state ? "Added to Favourites" : "Removed from Favourites");
+    setShowToast(true);
+  };
   const formData = (recipeName) => {
-    // console.log(h);
     setSearchRecipe(recipeName);
   };
   const renderContent = () => {
@@ -48,12 +63,18 @@ const App = () => {
           <Home
             recipe={recipe}
             handleRecipeClick={handleRecipeClick}
+            handleFavouriteClick={handleFavouriteClick}
             handleForm={formData}
             searchQuery={searchRecipe}
           />
         );
       case "Favourites":
-        return <Favourites handleRecipeClick={handleRecipeClick} />;
+        return (
+          <Favourites
+            handleRecipeClick={handleRecipeClick}
+            handleFavouriteClick={handleFavouriteClick}
+          />
+        );
       default:
         return null;
     }
@@ -86,6 +107,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      {showToast && <Toast message={toastMessage} />}
     </>
   );
 };

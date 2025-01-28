@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
-import Toast from "./Toast";
 
-const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
+const Home = ({
+  recipe,
+  handleRecipeClick,
+  handleFavouriteClick,
+  searchQuery,
+}) => {
   const [searchedItems, setSearchedItems] = useState(recipe);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+
 
   // Function to search recipes based on the search query
   const searchRecipes = () => {
@@ -15,6 +18,7 @@ const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
         item.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setSearchedItems(filteredItems);
+      console.log(filteredItems);
     } else {
       setSearchedItems(recipe);
     }
@@ -25,7 +29,7 @@ const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
     if (data === "All Recipes") {
       setSearchedItems(recipe);
     } else {
-      const filteredRecipes = searchedItems.filter((item) =>
+      const filteredRecipes = recipe.filter((item) =>
         item.dishTypes.includes(data.toLowerCase()),
       );
       setSearchedItems(filteredRecipes);
@@ -33,22 +37,14 @@ const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
   };
 
   // Function to toggle favourite status
-  const toggleFavourite = (newFavourite) => {
-    // Receiving id and state of the favourite card
-    setToastMessage(
-      newFavourite ? "Added to Favourites" : "Removed from Favourites",
-    );
-    setShowToast(true);
-  };
+  // const toggleFavourite = (newFavourite) => {
+  //   // Receiving id and state of the favourite card
+  //   setToastMessage(
+  //     newFavourite ? "Added to Favourites" : "Removed from Favourites",
+  //   );
+  //   setShowToast(true);
+  // };
 
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => {
-        setShowToast(false);
-      }, 2900);
-      return () => clearTimeout(timer);
-    }
-  }, [showToast]);
 
   useEffect(() => {
     searchRecipes();
@@ -63,11 +59,11 @@ const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
                 data={item}
                 key={item.id}
                 handleRecipeClick={handleRecipeClick}
+                handleFavouriteClick={handleFavouriteClick}
               />
             ))
           : "No recipes found"}
       </div>
-      {showToast && <Toast message={toastMessage} />}
     </div>
   );
 };
