@@ -3,12 +3,7 @@ import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
 import Toast from "./Toast";
 
-const Home = ({
-  recipe,
-  handleRecipeClick,
-  handleFavouriteClick,
-  searchQuery,
-}) => {
+const Home = ({ recipe, handleRecipeClick, searchQuery }) => {
   const [searchedItems, setSearchedItems] = useState(recipe);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -38,9 +33,8 @@ const Home = ({
   };
 
   // Function to toggle favourite status
-  const toggleFavourite = (id, newFavourite) => {
+  const toggleFavourite = (newFavourite) => {
     // Receiving id and state of the favourite card
-    handleFavouriteClick(id, newFavourite);
     setToastMessage(
       newFavourite ? "Added to Favourites" : "Removed from Favourites",
     );
@@ -69,7 +63,6 @@ const Home = ({
                 data={item}
                 key={item.id}
                 handleRecipeClick={handleRecipeClick}
-                handleFavouriteClick={toggleFavourite}
               />
             ))
           : "No recipes found"}

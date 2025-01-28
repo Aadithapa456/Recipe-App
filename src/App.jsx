@@ -36,10 +36,7 @@ const App = () => {
     setRecipeId(data.id);
     setRecipeVisible((prev) => !prev);
   };
-  const handleFavouriteClick = (id, state) => {
-    console.log(id);
-    storeFavourite(id, state);
-  };
+
   const formData = (recipeName) => {
     // console.log(h);
     setSearchRecipe(recipeName);
@@ -51,13 +48,12 @@ const App = () => {
           <Home
             recipe={recipe}
             handleRecipeClick={handleRecipeClick}
-            handleFavouriteClick={handleFavouriteClick}
             handleForm={formData}
             searchQuery={searchRecipe}
           />
         );
       case "Favourites":
-        return <Favourites />;
+        return <Favourites handleRecipeClick={handleRecipeClick} />;
       default:
         return null;
     }

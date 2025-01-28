@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import { getFavouriteItem } from "../services/favourites";
 
-const Favourites = () => {
+const Favourites = ({ handleRecipeClick }) => {
   const [favouriteItem, setFavouriteItem] = useState();
   useEffect(() => {
     const fetchData = async () => {
@@ -18,8 +18,7 @@ const Favourites = () => {
         ? favouriteItem.map((item, index) => (
             <RecipeCard
               data={item}
-              handleRecipeClick={() => console.log("object")}
-              handleFavouriteClick={() => console.log("object")}
+              handleRecipeClick={handleRecipeClick}
               key={index}
             />
           ))

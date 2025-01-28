@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { formatLabels, formatMinutes } from "../utils/helpers";
 import { useEffect } from "react";
 import Label from "./Label";
+import { storeFavourite } from "../services/favourites";
 
-const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
+const RecipeCard = ({ data, handleRecipeClick }) => {
   const [favourite, setFavourite] = useState(false);
   const toggleFavourite = () => {
     setFavourite((prevFavourite) => {
       const newFavourite = !prevFavourite;
-      handleFavouriteClick(data.id, newFavourite);
+      storeFavourite(data.id, newFavourite);
       return newFavourite;
     });
   };
