@@ -12,3 +12,13 @@ export const formatMinutes = (minutes) => {
     return `${remainingMinutes}`;
   }
 };
+
+// Filtering long labels
+export const formatLabels = (label) => {
+  let labelWords = label.split(" ");
+  if (labelWords.length > 1) {
+    return null;
+  } else {
+    return label;
+  }
+};

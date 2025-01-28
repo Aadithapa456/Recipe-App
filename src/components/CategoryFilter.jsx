@@ -6,8 +6,9 @@ const categories = [
   "Lunch",
   "Dinner",
   "Desserts",
-  "Vegeterian",
-  "Vegan",
+  "Drink",
+  "Starter",
+  "Snack",
 ];
 const CategoryFilter = ({ handleDishType }) => {
   const [activeCategory, setActiveCategory] = useState("All Recipes");

@@ -1,6 +1,6 @@
-import { ArrowUpRight, Clock, Heart, User } from "lucide-react";
+import { Clock, Heart, ShieldQuestion, User } from "lucide-react";
 import React, { useState } from "react";
-import { formatMinutes } from "../utils/helpers";
+import { formatLabels, formatMinutes } from "../utils/helpers";
 import { useEffect } from "react";
 import Label from "./Label";
 
@@ -25,24 +25,32 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
 
   return (
     <div className="recipe-card-container flex max-w-xs flex-col gap-4 overflow-hidden rounded-md bg-white shadow-md">
-      <div className="recipe-card-image relative">
+      <div className="recipe-card-image relative mb-3">
         <img
           src={`${data.image ? data.image : "https://placehold.co/600x400"}`}
           alt=""
-          className=""
+          className="recipe-image"
         />
         <button
-          className="details-btn p-.5 text- absolute right-4 top-2 rounded-full bg-white text-gray shadow-md"
-          onClick={() => handleRecipeClick(data)}
+          className="recipe-favourite absolute -bottom-3 right-2 rounded-full bg-white p-1 text-gray shadow-md transition duration-300 hover:scale-110 hover:text-primary"
+          onClick={toggleFavourite}
         >
-          <ArrowUpRight />
+          <Heart
+            className={`hover:stroke-primary ${favourite ? "fill-primary" : "text-red"}`}
+            stroke={`${favourite ? "none" : "gray"}`}
+          />
         </button>
       </div>
-      <div className="recipe-card-main flex flex-col gap-3 px-4">
+      <div className="recipe-card-main mt-auto flex flex-col gap-3 px-4">
         <div className="recipe-label grid-auto-fill-card">
-          {data.dishTypes.slice(0, 3).map((label, index) => (
-            <Label label={label} key={index} />
-          ))}
+          {data.dishTypes
+            .reduce((acc, label) => {
+              const formattedLabel = formatLabels(label);
+              if (formattedLabel)
+                acc.push(<Label key={acc.length} label={formattedLabel} />);
+              return acc;
+            }, [])
+            .slice(0, 4)}
         </div>
         <div className="recipe-main-details">
           <div className="recipe-title py-2 text-lg font-bold">
@@ -67,13 +75,10 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
         </div>
         <div className="recipe-footer-right">
           <button
-            className="recipe-favourite text-gray hover:text-primary"
-            onClick={toggleFavourite}
+            className="details-btn p-.5 rounded-full p-1 text-gray shadow-md transition duration-300 hover:scale-110"
+            onClick={() => handleRecipeClick(data)}
           >
-            <Heart
-              className={`hover:stroke-primary ${favourite ? "fill-primary" : "text-red"}`}
-              stroke={`${favourite ? "none" : "gray"}`}
-            />
+            <ShieldQuestion />
           </button>
         </div>
       </div>

@@ -82,8 +82,10 @@ const App = () => {
                 data={recipeInformation}
                 close={closeRecipeDetail}
               ></RecipeDetail>
-            ) : (
+            ) : recipe ? (
               renderContent()
+            ) : (
+              " Not Found"
             )}
           </div>
         </div>
