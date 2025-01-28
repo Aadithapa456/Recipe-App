@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
+import { filterByCategory, searchItems } from "../utils/helpers";
 
 const Home = ({
   recipe,
@@ -9,46 +10,38 @@ const Home = ({
   searchQuery,
 }) => {
   const [searchedItems, setSearchedItems] = useState(recipe);
-
+  const [selectedCategory, setselectedCategory] = useState("All Recipes");
 
   // Function to search recipes based on the search query
   const searchRecipes = () => {
+    let filteredItems;
     if (searchQuery) {
-      const filteredItems = searchedItems.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-      setSearchedItems(filteredItems);
-      console.log(filteredItems);
+      filteredItems = searchItems(searchedItems, searchQuery);
     } else {
-      setSearchedItems(recipe);
+      filteredItems = filterByCategory(selectedCategory, recipe);
     }
+    setSearchedItems(filteredItems);
   };
 
-  const handleDishTypeChange = (data) => {
+  const handleDishTypeChange = (category) => {
+    console.log(searchedItems);
     // Exits the function if selected category is All
-    if (data === "All Recipes") {
+    if (category === "All Recipes") {
       setSearchedItems(recipe);
     } else {
-      const filteredRecipes = recipe.filter((item) =>
-        item.dishTypes.includes(data.toLowerCase()),
-      );
+      const filteredRecipes = filterByCategory(category, recipe);
       setSearchedItems(filteredRecipes);
+      setselectedCategory(category);
     }
   };
-
-  // Function to toggle favourite status
-  // const toggleFavourite = (newFavourite) => {
-  //   // Receiving id and state of the favourite card
-  //   setToastMessage(
-  //     newFavourite ? "Added to Favourites" : "Removed from Favourites",
-  //   );
-  //   setShowToast(true);
-  // };
-
 
   useEffect(() => {
     searchRecipes();
   }, [searchQuery, recipe]);
+
+  useEffect(() => {
+    setSearchedItems(recipe);
+  }, [recipe]);
   return (
     <div>
       <CategoryFilter handleDishType={handleDishTypeChange} />

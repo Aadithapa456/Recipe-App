@@ -22,3 +22,15 @@ export const formatLabels = (label) => {
     return label;
   }
 };
+
+export const searchItems = (items, searchQuery) => {
+  return items.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+};
+
+export const filterByCategory = (category, recipe) => {
+  return recipe.filter((item) =>
+    item.dishTypes.includes(category.toLowerCase()),
+  );
+};
