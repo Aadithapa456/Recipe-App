@@ -4,9 +4,9 @@ import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
-import { storeFavourite } from "./services/favourites";
 import Header from "./components/Header";
 import Toast from "./components/Toast";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("Home");
@@ -112,7 +112,7 @@ const App = () => {
             ) : recipe ? (
               renderContent()
             ) : (
-              " Not Found"
+              <NotFound />
             )}
           </div>
         </div>
