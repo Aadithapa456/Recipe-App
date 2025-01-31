@@ -3,7 +3,7 @@ import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
 import { filterByCategory, searchItems } from "../utils/helpers";
 import NotFound from "./NotFound";
-
+import Pagination from "./Pagination";
 const Home = ({
   recipe,
   handleRecipeClick,
@@ -12,7 +12,11 @@ const Home = ({
 }) => {
   const [searchedItems, setSearchedItems] = useState(recipe);
   const [selectedCategory, setselectedCategory] = useState("All Recipes");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 8;
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = recipe.slice(firstPostIndex, lastPostIndex);
   // Function to search recipes based on the search query
   const searchRecipes = () => {
     let filteredItems;
@@ -25,7 +29,6 @@ const Home = ({
   };
 
   const handleDishTypeChange = (category) => {
-    console.log(searchedItems);
     // Exits the function if selected category is All
     if (category === "All Recipes") {
       setSearchedItems(recipe);
@@ -35,14 +38,21 @@ const Home = ({
       setselectedCategory(category);
     }
   };
-
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   useEffect(() => {
     searchRecipes();
   }, [searchQuery, recipe]);
 
   useEffect(() => {
-    setSearchedItems(recipe);
+    // setSearchedItems(recipe);
+    setSearchedItems(currentPosts);
   }, [recipe]);
+  useEffect(() => {
+    // setSearchedItems(recipe);
+    setSearchedItems(currentPosts);
+  }, [currentPage]);
   return (
     <div>
       <CategoryFilter handleDishType={handleDishTypeChange} />
@@ -61,6 +71,7 @@ const Home = ({
         )}
       </div>
       {/* <NotFound /> */}
+      <Pagination handlePageChange={handlePageChange} />
     </div>
   );
 };
