@@ -29,7 +29,7 @@ export const searchItems = (items, searchQuery) => {
   );
 };
 
-export const filterByCategory = (category, recipe) => {
+export const filterByCategory = (recipe, category) => {
   return recipe.filter((item) =>
     item.dishTypes.includes(category.toLowerCase()),
   );

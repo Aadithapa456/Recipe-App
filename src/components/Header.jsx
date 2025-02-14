@@ -1,15 +1,15 @@
 import { Plus, Search } from "lucide-react";
-import React from "react";
-import { useState } from "react";
-const Header = ({ handleForm }) => {
-  const [formData, setFormData] = useState("");
+import React, { useContext } from "react";
+import { SearchContext } from "../context/SearchContext";
+const Header = () => {
+  // const [formData, setFormData] = useState("");
+  const { searchQuery, setSearchQuery } = useContext(SearchContext);
   const handleInput = (e) => {
-    setFormData(e.target.value);
-    handleForm(e.target.value);
-    // console.log(formData);
+    setSearchQuery(e.target.value);
   };
+
   const handleSearch = () => {
-    console.log(formData);
+    console.log(searchQuery);
   };
   return (
     <div className="header-container mb-6 mt-3 flex flex-col-reverse justify-between gap-10 md:mt-2 md:gap-1 lg:mt-1 lg:flex-row">
@@ -23,7 +23,7 @@ const Header = ({ handleForm }) => {
           className="w-full border border-border-light bg-white py-2 pl-10 text-sm lg:w-96"
           placeholder="Search for recipes.."
           onChange={handleInput}
-          value={formData}
+          value={searchQuery}
         />
       </div>
       <div className="header-right mr-4 flex flex-row-reverse items-center justify-between gap-8 md:justify-center lg:flex-row">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SideBar from "./components/SideBar";
 import Home from "./components/Home";
 import Favourites from "./components/Favourites";
@@ -7,17 +7,17 @@ import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import Header from "./components/Header";
 import Toast from "./components/Toast";
 import NotFound from "./components/NotFound";
+import { SearchContext } from "./context/SearchContext";
 
 const App = () => {
+  const { searchQuery } = useContext(SearchContext);
   const [currentView, setCurrentView] = useState("Home");
   const [recipeId, setRecipeId] = useState("");
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);
   const [recipeVisible, setRecipeVisible] = useState(false);
-  const [searchRecipe, setSearchRecipe] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData();
@@ -55,10 +55,6 @@ const App = () => {
     setShowToast(true);
   };
 
-  const formData = (recipeName) => {
-    setSearchRecipe(recipeName);
-  };
-
   const handleCurrentView = (current) => {
     setCurrentView(current);
     setRecipeVisible(false);
@@ -68,9 +64,6 @@ const App = () => {
     setRecipeVisible(false);
   };
 
-  const handleForm = (recipeName) => {
-    setSearchRecipe(recipeName);
-  };
   const renderContent = () => {
     switch (currentView) {
       case "Home":
@@ -79,8 +72,7 @@ const App = () => {
             recipe={recipe}
             handleRecipeClick={handleRecipeClick}
             handleFavouriteClick={handleFavouriteClick}
-            handleForm={formData}
-            searchQuery={searchRecipe}
+            searchQuery={searchQuery}
           />
         );
       case "Favourites":
@@ -103,7 +95,7 @@ const App = () => {
             <SideBar onSelect={handleCurrentView} />
           </div>
           <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
-            <Header handleForm={handleForm} />
+            <Header />
             {recipeVisible ? (
               <RecipeDetail
                 data={recipeInformation}

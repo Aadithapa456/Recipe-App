@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import CategoryFilter from "./CategoryFilter";
 import { filterByCategory, searchItems } from "../utils/helpers";
 import NotFound from "./NotFound";
 import Pagination from "./Pagination";
-const Home = ({
-  recipe,
-  handleRecipeClick,
-  handleFavouriteClick,
-  searchQuery,
-}) => {
+import { SearchContext } from "../context/SearchContext";
+
+const Home = ({ recipe, handleRecipeClick, handleFavouriteClick }) => {
+  const { searchQuery } = useContext(SearchContext);
   const [searchedItems, setSearchedItems] = useState(recipe);
   const [selectedCategory, setselectedCategory] = useState("All Recipes");
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,10 +19,12 @@ const Home = ({
   const searchRecipes = () => {
     let filteredItems;
     if (searchQuery) {
-      filteredItems = searchItems(searchedItems, searchQuery);
+      filteredItems = searchItems(recipe, searchQuery);
     } else {
-      filteredItems = filterByCategory(selectedCategory, recipe);
+      filteredItems = filterByCategory(currentPosts, selectedCategory);
+      console.log("object");
     }
+    console.log(filteredItems);
     setSearchedItems(filteredItems);
   };
 
@@ -33,7 +33,7 @@ const Home = ({
     if (category === "All Recipes") {
       setSearchedItems(recipe);
     } else {
-      const filteredRecipes = filterByCategory(category, recipe);
+      const filteredRecipes = filterByCategory(currentPosts, category);
       setSearchedItems(filteredRecipes);
       setselectedCategory(category);
     }
@@ -50,7 +50,6 @@ const Home = ({
     setSearchedItems(currentPosts);
   }, [recipe]);
   useEffect(() => {
-    // setSearchedItems(recipe);
     setSearchedItems(currentPosts);
   }, [currentPage]);
   return (
@@ -70,7 +69,6 @@ const Home = ({
           <NotFound />
         )}
       </div>
-      {/* <NotFound /> */}
       <Pagination handlePageChange={handlePageChange} />
     </div>
   );
