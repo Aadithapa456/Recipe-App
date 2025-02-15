@@ -56,11 +56,6 @@ const App = () => {
     setShowToast(true);
   };
 
-  const handleCurrentView = (current) => {
-    setCurrentView(current);
-    setRecipeVisible(false);
-  };
-
   const closeRecipeDetail = () => {
     setRecipeVisible(false);
   };
@@ -93,7 +88,7 @@ const App = () => {
       <div className="app-container flex min-h-screen">
         <div className="flex flex-1">
           <div className="sidebar mr-6 lg:mr-16">
-            <SideBar onSelect={handleCurrentView} />
+            <SideBar />
           </div>
           <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
             <Header />

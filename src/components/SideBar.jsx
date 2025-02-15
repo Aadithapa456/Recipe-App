@@ -18,7 +18,7 @@ const sideBarContents = [
   { name: "Settings", icon: <Settings /> },
 ];
 
-const SideBar = ({ onSelect }) => {
+const SideBar = () => {
   const { currentView, setCurrentView } = useContext(ViewContext);
   const [isMobile, setIsMobile] = useState(false);
   const handleSelect = (item) => {
