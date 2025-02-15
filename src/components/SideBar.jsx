@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Home,
   Heart,
@@ -8,6 +8,7 @@ import {
   Utensils,
   Menu,
 } from "lucide-react";
+import { ViewContext } from "../context/ViewContext";
 
 const sideBarContents = [
   { name: "Home", icon: <Home /> },
@@ -18,12 +19,10 @@ const sideBarContents = [
 ];
 
 const SideBar = ({ onSelect }) => {
-  const [activeItem, setActiveItem] = useState("Home");
+  const { currentView, setCurrentView } = useContext(ViewContext);
   const [isMobile, setIsMobile] = useState(false);
-
   const handleSelect = (item) => {
-    onSelect(item.name);
-    setActiveItem(item.name);
+    setCurrentView(item.name);
     if (isMobile) {
       setIsMobile(false); // Close sidebar on mobile after selection
     }
@@ -42,7 +41,7 @@ const SideBar = ({ onSelect }) => {
           isMobile ? "translate-x-0" : "-translate-x-full"
         } lg:block lg:translate-x-0`}
       >
-        <div className="sidebar-logo flex items-center gap-4 p-4 text-center text-3xl font-bold text-primary mt-4">
+        <div className="sidebar-logo mt-4 flex items-center gap-4 p-4 text-center text-3xl font-bold text-primary">
           <span>ReciPie</span>
           <Utensils />
         </div>
@@ -52,7 +51,7 @@ const SideBar = ({ onSelect }) => {
               <li
                 key={index}
                 className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${
-                  activeItem === item.name
+                  currentView === item.name
                     ? "bg-primary text-white"
                     : "text-gray-700"
                 }`}
