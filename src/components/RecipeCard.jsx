@@ -4,6 +4,7 @@ import { formatLabels, formatMinutes } from "../utils/helpers";
 import { useEffect } from "react";
 import Label from "./Label";
 import { storeFavourite } from "../services/favourites";
+import { Link } from "react-router-dom";
 
 const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
   const [favourite, setFavourite] = useState(false);
@@ -76,12 +77,14 @@ const RecipeCard = ({ data, handleRecipeClick, handleFavouriteClick }) => {
           </div>
         </div>
         <div className="recipe-footer-right">
-          <button
-            className="details-btn p-.5 rounded-full p-1 text-gray shadow-md transition duration-300 hover:scale-110"
-            onClick={() => handleRecipeClick(data)}
-          >
-            <ShieldQuestion />
-          </button>
+          <Link to={`/recipe/${data.id}`}>
+            <button
+              className="details-btn p-.5 rounded-full p-1 text-gray shadow-md transition duration-300 hover:scale-110"
+              onClick={() => handleRecipeClick(data)}
+            >
+              <ShieldQuestion />
+            </button>
+          </Link>
         </div>
       </div>
     </div>

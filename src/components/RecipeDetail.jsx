@@ -5,18 +5,18 @@ import { formatMinutes } from "../utils/helpers";
 import Label from "./Label";
 import Instructions from "./Instructions";
 import Ingredients from "./Ingredients";
+import { Link } from "react-router-dom";
 
-const RecipeDetail = ({ data, close }) => {
+const RecipeDetail = ({ data }) => {
   return (
     <>
       {data ? (
         <div className="recipe-info-container mx-auto mb-10 flex w-full max-w-[1400px] flex-col gap-10 px-2 lg:px-10">
-          <button
-            className="transition duration-300 hover:text-primary"
-            onClick={close}
-          >
-            <ArrowLeft />
-          </button>
+          <Link to={"/"}>
+            <button className="transition duration-300 hover:text-primary">
+              <ArrowLeft />
+            </button>
+          </Link>
           <div className="recipe-meta-details mb-5 flex flex-wrap items-center justify-between">
             <div className="recipe-detail-title text-2xl font-bold text-primary">
               {data.title}
