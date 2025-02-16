@@ -8,12 +8,10 @@ import Header from "./components/Header";
 import Toast from "./components/Toast";
 import NotFound from "./components/NotFound";
 import { SearchContext } from "./context/SearchContext";
-import { ViewContext } from "./context/ViewContext";
 import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   const { searchQuery } = useContext(SearchContext);
-  const { currentView, setCurrentView } = useContext(ViewContext);
   const [recipeId, setRecipeId] = useState("");
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);

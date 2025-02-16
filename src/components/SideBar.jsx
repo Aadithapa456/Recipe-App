@@ -8,8 +8,8 @@ import {
   Utensils,
   Menu,
 } from "lucide-react";
-import { ViewContext } from "../context/ViewContext";
-import { Link } from "react-router-dom";
+
+import { Link, useLocation } from "react-router-dom";
 
 const sideBarContents = [
   { name: "Home", icon: <Home />, path: "/" },
@@ -20,10 +20,9 @@ const sideBarContents = [
 ];
 
 const SideBar = () => {
-  const { currentView, setCurrentView } = useContext(ViewContext);
   const [isMobile, setIsMobile] = useState(false);
-  const handleSelect = (item) => {
-    setCurrentView(item.name);
+  const location = useLocation();
+  const handleSelect = () => {
     if (isMobile) {
       setIsMobile(false); // Close sidebar on mobile after selection
     }
@@ -49,19 +48,18 @@ const SideBar = () => {
         <div className="sidebar-main lg:mt-20">
           <ul>
             {sideBarContents.map((item, index) => (
-              <Link to={item.path}>
-                <li
-                  key={index}
-                  className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${
-                    currentView === item.name
-                      ? "bg-primary text-white"
-                      : "text-gray-700"
-                  }`}
-                  onClick={() => handleSelect(item)}
-                >
-                  {item.icon}
-                  <span>{item.name}</span>
-                </li>
+              <Link
+                to={item.path}
+                key={index}
+                className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${
+                  location.pathname === item.path
+                    ? "bg-primary text-white"
+                    : "text-gray-700"
+                }`}
+                onClick={() => handleSelect()}
+              >
+                {item.icon}
+                <span>{item.name}</span>
               </Link>
             ))}
           </ul>
