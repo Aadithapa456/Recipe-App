@@ -9,6 +9,7 @@ import Toast from "./components/Toast";
 import NotFound from "./components/NotFound";
 import { SearchContext } from "./context/SearchContext";
 import { ViewContext } from "./context/ViewContext";
+import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   const { searchQuery } = useContext(SearchContext);
@@ -60,29 +61,6 @@ const App = () => {
     setRecipeVisible(false);
   };
 
-  const renderContent = () => {
-    switch (currentView) {
-      case "Home":
-        return (
-          <Home
-            recipe={recipe}
-            handleRecipeClick={handleRecipeClick}
-            handleFavouriteClick={handleFavouriteClick}
-            searchQuery={searchQuery}
-          />
-        );
-      case "Favourites":
-        return (
-          <Favourites
-            handleRecipeClick={handleRecipeClick}
-            handleFavouriteClick={handleFavouriteClick}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <>
       <div className="app-container flex min-h-screen">
@@ -92,16 +70,38 @@ const App = () => {
           </div>
           <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
             <Header />
-            {recipeVisible ? (
-              <RecipeDetail
-                data={recipeInformation}
-                close={closeRecipeDetail}
-              ></RecipeDetail>
-            ) : recipe ? (
-              renderContent()
-            ) : (
-              <NotFound />
-            )}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    recipe={recipe}
+                    handleRecipeClick={handleRecipeClick}
+                    handleFavouriteClick={handleFavouriteClick}
+                    searchQuery={searchQuery}
+                  />
+                }
+              />
+              <Route
+                path="/favourites"
+                element={
+                  <Favourites
+                    handleRecipeClick={handleRecipeClick}
+                    handleFavouriteClick={handleFavouriteClick}
+                  />
+                }
+              />
+              <Route
+                path="/recipe/:id"
+                element={
+                  <RecipeDetail
+                    data={recipeInformation}
+                    close={closeRecipeDetail}
+                  />
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
         </div>
       </div>

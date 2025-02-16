@@ -9,13 +9,14 @@ import {
   Menu,
 } from "lucide-react";
 import { ViewContext } from "../context/ViewContext";
+import { Link } from "react-router-dom";
 
 const sideBarContents = [
-  { name: "Home", icon: <Home /> },
-  { name: "Favourites", icon: <Heart /> },
-  { name: "Collection", icon: <Folder /> },
-  { name: "Recents", icon: <Clock /> },
-  { name: "Settings", icon: <Settings /> },
+  { name: "Home", icon: <Home />, path: "/" },
+  { name: "Favourites", icon: <Heart />, path: "/favourites" },
+  { name: "Collection", icon: <Folder />, path: "/collection" },
+  { name: "Recents", icon: <Clock />, path: "/recents" },
+  { name: "Settings", icon: <Settings />, path: "/settings" },
 ];
 
 const SideBar = () => {
@@ -48,18 +49,20 @@ const SideBar = () => {
         <div className="sidebar-main lg:mt-20">
           <ul>
             {sideBarContents.map((item, index) => (
-              <li
-                key={index}
-                className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${
-                  currentView === item.name
-                    ? "bg-primary text-white"
-                    : "text-gray-700"
-                }`}
-                onClick={() => handleSelect(item)}
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </li>
+              <Link to={item.path}>
+                <li
+                  key={index}
+                  className={`text-md mt-6 flex cursor-pointer items-center gap-4 rounded-lg px-4 py-3 transition duration-300 hover:bg-primary hover:text-white ${
+                    currentView === item.name
+                      ? "bg-primary text-white"
+                      : "text-gray-700"
+                  }`}
+                  onClick={() => handleSelect(item)}
+                >
+                  {item.icon}
+                  <span>{item.name}</span>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
