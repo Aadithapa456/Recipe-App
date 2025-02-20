@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import RecipeCard from "./RecipeCard";
-import CategoryFilter from "./CategoryFilter";
+import RecipeCard from "../components/RecipeCard";
+import CategoryFilter from "../components/CategoryFilter";
 import { filterByCategory, searchItems } from "../utils/helpers";
-import NotFound from "./NotFound";
-import Pagination from "./Pagination";
+import NotFound from "../components/NotFound";
+import Pagination from "../components/Pagination";
 import { SearchContext } from "../context/SearchContext";
 
 const Home = ({ recipe, handleRecipeClick, handleFavouriteClick }) => {

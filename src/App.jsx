@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import SideBar from "./components/SideBar";
-import Home from "./components/Home";
+import Home from "./Pages/Home";
 import Favourites from "./components/Favourites";
 import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
-import Header from "./components/Header";
-import Toast from "./components/Toast";
 import NotFound from "./components/NotFound";
 import { SearchContext } from "./context/SearchContext";
 import { Route, Routes } from "react-router-dom";
+import Login from "./Pages/Login";
+import MainLayout from "./components/MainLayout";
+import AuthLayout from "./components/AuthLayout";
 
 const App = () => {
   const { searchQuery } = useContext(SearchContext);
@@ -61,49 +61,48 @@ const App = () => {
 
   return (
     <>
-      <div className="app-container flex min-h-screen">
-        <div className="flex flex-1">
-          <div className="sidebar mr-6 lg:mr-16">
-            <SideBar />
-          </div>
-          <div className="main-content relative mr-1 mt-10 flex flex-1 flex-col gap-8 lg:mr-6">
-            <Header />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home
-                    recipe={recipe}
-                    handleRecipeClick={handleRecipeClick}
-                    handleFavouriteClick={handleFavouriteClick}
-                    searchQuery={searchQuery}
-                  />
-                }
+      <Routes>
+        <Route
+          element={
+            <MainLayout showToast={showToast} toastMessage={toastMessage} />
+          }
+        >
+          <Route
+            path="/"
+            element={
+              <Home
+                recipe={recipe}
+                handleRecipeClick={handleRecipeClick}
+                handleFavouriteClick={handleFavouriteClick}
+                searchQuery={searchQuery}
               />
-              <Route
-                path="/favourites"
-                element={
-                  <Favourites
-                    handleRecipeClick={handleRecipeClick}
-                    handleFavouriteClick={handleFavouriteClick}
-                  />
-                }
+            }
+          />
+          <Route
+            path="/favourites"
+            element={
+              <Favourites
+                handleRecipeClick={handleRecipeClick}
+                handleFavouriteClick={handleFavouriteClick}
               />
-              <Route
-                path="/recipe/:id"
-                element={
-                  <RecipeDetail
-                    data={recipeInformation}
-                    close={closeRecipeDetail}
-                  />
-                }
+            }
+          />
+          <Route
+            path="/recipe/:id"
+            element={
+              <RecipeDetail
+                data={recipeInformation}
+                close={closeRecipeDetail}
               />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </div>
-      </div>
-      {showToast && <Toast message={toastMessage} />}
+            }
+          />
+        </Route>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/signup" element={<SignUp />} /> */}
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 };
