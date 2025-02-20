@@ -1,5 +1,6 @@
 import { Utensils } from "lucide-react";
 import React, { useState } from "react";
+import { supabase } from "../services/client";
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -14,6 +15,21 @@ const Login = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      //   const { data, error } = await supabase.auth.signUp({
+      //     email: loginInfo.email,
+      //     password: loginInfo.password,
+      //   });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginInfo.email,
+        password: loginInfo.password,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <div className="min-w-[450px] bg-white px-8 py-4 shadow-md">
       <div className="login-header flex flex-col items-center gap-1">
@@ -26,7 +42,11 @@ const Login = () => {
           Sign in to access your recipes
         </div>
       </div>
-      <form action="" className="login-form mb-4 mt-10 flex flex-col gap-8">
+      <form
+        action=""
+        className="login-form mb-4 mt-10 flex flex-col gap-8"
+        onSubmit={handleLoginSubmit}
+      >
         <div className="form-group form-email flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input

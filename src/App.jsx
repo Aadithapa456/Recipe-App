@@ -5,7 +5,7 @@ import RecipeDetail from "./components/RecipeDetail";
 import { fetchApiData, fetchRecipeInformation } from "./services/api";
 import NotFound from "./components/NotFound";
 import { SearchContext } from "./context/SearchContext";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Pages/Login";
 import MainLayout from "./components/MainLayout";
 import AuthLayout from "./components/AuthLayout";
@@ -15,16 +15,19 @@ const App = () => {
   const [recipeId, setRecipeId] = useState("");
   const [recipeInformation, setRecipeInformation] = useState();
   const [recipe, setRecipe] = useState([]);
-  const [recipeVisible, setRecipeVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const location = useLocation();
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchApiData();
-      setRecipe(data);
-    };
-    fetchData();
-  }, []);
+    // Preventing Unnecessary API calls
+    if (location.pathname !== "/login") {
+      const fetchData = async () => {
+        const data = await fetchApiData();
+        setRecipe(data);
+      };
+      fetchData();
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const fetchRecipeInfo = async () => {
