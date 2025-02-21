@@ -9,6 +9,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Pages/Login";
 import MainLayout from "./components/MainLayout";
 import AuthLayout from "./components/AuthLayout";
+import SignUp from "./Pages/SignUp";
 
 const App = () => {
   const { searchQuery } = useContext(SearchContext);
@@ -99,10 +100,24 @@ const App = () => {
               />
             }
           />
+          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/recipe/:id"
+            element={
+              <RecipeDetail
+                data={recipeInformation}
+                close={closeRecipeDetail}
+              />
+            }
+          />
         </Route>
-        <Route element={<AuthLayout />}>
+        <Route
+          element={
+            <AuthLayout showToast={showToast} toastMessage={toastMessage} />
+          }
+        >
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/signup" element={<SignUp />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

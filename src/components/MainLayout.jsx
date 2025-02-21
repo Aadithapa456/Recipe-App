@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Toast from "./Toast";
 import SideBar from "./SideBar";
+import { ToastContext } from "../context/ToastContext";
 
-const MainLayout = ({ showToast, toastMessage }) => {
+const MainLayout = () => {
+  const { showToast, toastMessage } = useContext(ToastContext);
+
   return (
     <>
       <div className="app-container flex min-h-screen">

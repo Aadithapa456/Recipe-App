@@ -1,12 +1,29 @@
 import { Plus, Search } from "lucide-react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
+import { supabase } from "../services/client";
+
 const Header = () => {
-  // const [formData, setFormData] = useState("");
   const { searchQuery, setSearchQuery } = useContext(SearchContext);
+  const [user, setUser] = useState("");
   const handleInput = (e) => {
     setSearchQuery(e.target.value);
   };
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Error fetching user:", error.message);
+      } else {
+        setUser(user.user_metadata.first_name);
+      }
+      console.log(user);
+    };
+    fetchUser();
+  }, []);
 
   const handleSearch = () => {
     console.log(searchQuery);
@@ -31,7 +48,8 @@ const Header = () => {
           <Plus />
           <span>Add Recipe</span>
         </button>
-        <div className="profile">
+        <div className="profile flex items-center gap-4">
+          {user ? <p>Welcome {user}</p> : " Hello"}
           <img
             src="https://i.pinimg.com/550x/ac/82/57/ac8257e1cfc4e63f5c63f3d4869eb7c4.jpg"
             className="h-12 w-12 rounded-full"
